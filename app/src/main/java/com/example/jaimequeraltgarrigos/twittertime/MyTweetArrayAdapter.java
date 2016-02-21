@@ -14,6 +14,9 @@ import com.twitter.sdk.android.core.models.Tweet;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by jaimequeraltgarrigos on 19/2/16.
  */
@@ -21,9 +24,9 @@ public class MyTweetArrayAdapter extends ArrayAdapter {
 
     private Context context;
     private int resource;
-    private ArrayList<Tweet> tweetArrayList;
+    private ArrayList<MyTweetObject> tweetArrayList;
 
-    public MyTweetArrayAdapter(Context context, int resource, ArrayList<Tweet> tweetsList) {
+    public MyTweetArrayAdapter(Context context, int resource, ArrayList<MyTweetObject> tweetsList) {
         super(context, resource, tweetsList);
 
         this.context = context;
@@ -35,27 +38,45 @@ public class MyTweetArrayAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View rowView = convertView;
+        ViewHolder holder;
+        if (rowView != null) {
+            holder = (ViewHolder) rowView.getTag();
 
-        if (rowView == null) {
+        }else{
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(resource, parent, false);
+            holder = new ViewHolder(rowView);
+            rowView.setTag(holder);
         }
 
-        TextView textViewName = (TextView) rowView.findViewById(R.id.textViewName);
-        TextView textViewNick = (TextView) rowView.findViewById(R.id.textViewNick);
-        ImageView imageViewPhotoProfile = (ImageView) rowView.findViewById(R.id.imageView);
-        TextView textViewText = (TextView) rowView.findViewById(R.id.textViewText);
-        TextView textViewTime = (TextView) rowView.findViewById(R.id.textViewTime);
-        TextView textViewRetweet = (TextView) rowView.findViewById(R.id.textViewRetweet);
-
-        Picasso.with(context).load(tweetArrayList.get(position).user.profileImageUrl).resize(200, 200)
-                .centerCrop().into(imageViewPhotoProfile);
-        textViewName.setText(tweetArrayList.get(position).user.name);
-        textViewNick.setText(tweetArrayList.get(position).user.screenName);
-        textViewText.setText(tweetArrayList.get(position).text);
-        textViewTime.setText(tweetArrayList.get(position).createdAt);
-        textViewRetweet.setText(tweetArrayList.get(position).retweetCount + " RETWEET");
+        Picasso.with(context).load(tweetArrayList.get(position).getImageProfileURL()).resize(200, 200)
+                .centerCrop().into(holder.imageViewPhotoProfile);
+        holder.textViewName.setText(tweetArrayList.get(position).getName());
+        holder.textViewNick.setText(tweetArrayList.get(position).getNick());
+        holder.textViewText.setText(tweetArrayList.get(position).getText());
+        holder.textViewTime.setText(tweetArrayList.get(position).getCreationDate());
+        holder.textViewRetweet.setText(tweetArrayList.get(position).getRetweets() + " RETWEET");
 
         return rowView;
+    }
+
+    static class ViewHolder {
+        @Bind(R.id.textViewName)
+        TextView textViewName;
+        @Bind(R.id.textViewNick)
+        TextView textViewNick;
+        @Bind(R.id.imageView)
+        ImageView imageViewPhotoProfile;
+        @Bind(R.id.textViewText)
+        TextView textViewText;
+        @Bind(R.id.textViewTime)
+        TextView textViewTime;
+        @Bind(R.id.textViewRetweet)
+        TextView textViewRetweet;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+
     }
 }

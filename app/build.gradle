@@ -40,6 +40,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.jakewharton:butterknife:7.0.1'
     compile('com.twitter.sdk.android:twitter:1.12.1@aar') {
         transitive = true;
     }

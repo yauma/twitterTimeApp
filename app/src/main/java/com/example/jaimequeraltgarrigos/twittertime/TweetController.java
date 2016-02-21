@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class TweetController {
 
     private static TweetController tweetController ;
-    private ArrayList<Tweet> tweetsList;
+    private ArrayList<MyTweetObject> tweetsList;
     private AsyncResponse asyncResponse;
 
     public TweetController() {
@@ -35,7 +35,7 @@ public class TweetController {
 
     }
 
-    public void setTweetArrayList(ArrayList<Tweet> tweetArrayList) {
+    public void setTweetArrayList(ArrayList<MyTweetObject> tweetArrayList) {
         this.tweetsList = tweetArrayList;
         asyncResponse.TweetsDownloaded(tweetArrayList);
     }
