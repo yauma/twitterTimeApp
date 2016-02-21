@@ -46,21 +46,40 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
     public MainActivityFragment() {
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null){
+            tweetArrayList = savedInstanceState.getParcelableArrayList("tweetArrayList");
+            timeRequest = savedInstanceState.getString("timeRequest");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this,rootView);
+        ButterKnife.bind(this, rootView);
         handler = new Handler();
         textViewTweetNoFound.setText("Sorry, no tweets found for this time. Try later please");
         textViewTweetNoFound.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         TweetController.getInstance().setAsyncResponse(this);
-        createQuery();
-        getTweets(query);
+        //if tweetList ids not null because is load from savedInstance
+        if(tweetArrayList != null){
+            reloadTweetsFromList();
+        }else{
+            createQuery();
+            getTweets(query);
+        }
 
         return rootView;
+    }
+
+    private void reloadTweetsFromList() {
+        runnable.run();
+        progressBar.setVisibility(View.INVISIBLE);
+        loadMyTweeterArrayAdapter();
     }
 
 
@@ -108,7 +127,7 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
         }
     }
 
-    //Async return from Twiiter API or from db
+    //return tweetArrayList from Twiiter API or from db
     @Override
     public void TweetsDownloaded(ArrayList<MyTweetObject> tweetArrayList) {
         runnable.run();
@@ -117,7 +136,11 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
             textViewTweetNoFound.setVisibility(View.VISIBLE);
         }
         this.tweetArrayList = tweetArrayList;
-        myTweetArrayAdapter = new MyTweetArrayAdapter(getContext(), R.layout.tweet_adapter, tweetArrayList);
+        loadMyTweeterArrayAdapter();
+    }
+
+    private void loadMyTweeterArrayAdapter() {
+        myTweetArrayAdapter = new MyTweetArrayAdapter(getContext(), R.layout.tweet_adapter, this.tweetArrayList);
         listView.setAdapter(myTweetArrayAdapter);
     }
 
@@ -152,5 +175,7 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("tweetArrayList", tweetArrayList);
+        outState.putString("timeRequest",timeRequest);
     }
 }

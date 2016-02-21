@@ -13,21 +13,24 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp" >
+            android:layout_margin="10dp"
+            android:weightSum="100">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView"
-                android:layout_margin="@dimen/allMargin" />
+                android:layout_margin="@dimen/allMargin"
+                android:layout_weight="30" />
 
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:weightSum="2"
-                android:layout_gravity="center_vertical">
+                android:layout_gravity="center_vertical"
+                android:layout_weight="60">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -48,6 +51,14 @@
                     android:layout_weight="1"
                     android:textColor="@android:color/darker_gray" />
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageViewFavorite"
+                android:src="@drawable/ic_action_emo_wink"
+                android:layout_weight="10" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -73,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:id="@+id/textViewRetweet" />
+
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

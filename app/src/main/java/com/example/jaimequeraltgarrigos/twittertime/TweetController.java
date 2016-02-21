@@ -2,6 +2,7 @@ package com.example.jaimequeraltgarrigos.twittertime;
 
 import android.content.Context;
 
+import com.example.jaimequeraltgarrigos.twittertime.dbPackagge.DbTweets;
 import com.twitter.sdk.android.core.models.Tweet;
 
 import java.util.ArrayList;
@@ -42,5 +43,10 @@ public class TweetController {
 
     public void setAsyncResponse(AsyncResponse asyncResponse) {
         this.asyncResponse = asyncResponse;
+    }
+
+    public boolean saveTweetOnDb(Context context, MyTweetObject myTweetObject, byte[] byteArrayBitmap){
+        boolean tweetSavedOnDb = DbTweets.getInstance().insertTweet(context,myTweetObject,byteArrayBitmap);
+        return tweetSavedOnDb;
     }
 }
