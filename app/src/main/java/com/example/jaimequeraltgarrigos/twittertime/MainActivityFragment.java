@@ -14,8 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.twitter.sdk.android.core.models.Tweet;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -87,7 +85,7 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
         INTERNET_CONNECTION = isNetworkAvailable();
         if (INTERNET_CONNECTION == false) {
             Toast.makeText(getContext(), "No internet connection avalaible", Toast.LENGTH_LONG).show();
-            TweetController.getInstance().getTweetListFromDB(getContext());
+            tweetArrayList = TweetController.getInstance().getTweetListFromContentProvider(getContext());
         } else {
             System.out.println("getTweetFromAPI");
             TweetController.getInstance().getTweetListFromAPI(getContext(), query);

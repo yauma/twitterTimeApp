@@ -18,7 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("CREATE TABLE tweets (_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "tweetIdStr TEXT UNIQUE, "+
+                "tweetIdStr INTEGER UNIQUE, "+
                 "userName TEXT, " +
                 "userNick TEXT, " +
                 "userImageUrl TEXT, " +

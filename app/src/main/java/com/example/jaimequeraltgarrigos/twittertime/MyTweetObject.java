@@ -8,11 +8,12 @@ import android.os.Parcelable;
  */
 public class MyTweetObject implements Parcelable {
 
-    private String idStr,name, nick, imageProfileURL, text, creationDate;
+    private String name, nick, imageProfileURL, text, creationDate;
     private int retweets;
+    private long idStr;
     private byte[] imageByteArray;
 
-    public MyTweetObject(String idStr,String name, String nick, String imageProfileURL, String text, String creationDate, int retweets) {
+    public MyTweetObject(long idStr,String name, String nick, String imageProfileURL, String text, String creationDate, int retweets) {
         this.idStr = idStr;
         this.name = name;
         this.nick = nick;
@@ -22,7 +23,11 @@ public class MyTweetObject implements Parcelable {
         this.retweets = retweets;
     }
 
-    public String getidStr (){
+    public void setImageByteArray(byte[] imageByteArray) {
+        this.imageByteArray = imageByteArray;
+    }
+
+    public long getidStr(){
         return idStr;
     }
 

@@ -25,6 +25,8 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fa3cf94853f137172a9270da92660cba81996a56" />
+        <provider android:name=".contentProviderPackages.TweetsProvider"
+            android:authorities="com.example.jaimequeraltgarrigos.twittertime.contentproviders"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

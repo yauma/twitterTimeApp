@@ -2,8 +2,8 @@ package com.example.jaimequeraltgarrigos.twittertime;
 
 import android.content.Context;
 
+import com.example.jaimequeraltgarrigos.twittertime.contentProviderPackages.TweetsProvider;
 import com.example.jaimequeraltgarrigos.twittertime.dbPackagge.DbTweets;
-import com.twitter.sdk.android.core.models.Tweet;
 
 import java.util.ArrayList;
 
@@ -32,8 +32,9 @@ public class TweetController {
         TweetAPISearch.getInstance().SearchTweets(context,query);
     }
 
-    public void getTweetListFromDB (Context context){
-
+    public ArrayList<MyTweetObject> getTweetListFromContentProvider(Context context){
+        tweetsList = TweetsProvider.getListTweetsFromContentProvider(context);
+        return tweetsList;
     }
 
     public void setTweetArrayList(ArrayList<MyTweetObject> tweetArrayList) {

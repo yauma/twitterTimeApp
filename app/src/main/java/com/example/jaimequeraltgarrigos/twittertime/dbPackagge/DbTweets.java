@@ -44,7 +44,7 @@ public class DbTweets {
         newTweet.put("image_data", byteArrayBitMap);
 
         try {
-            db.insertOrThrow("tweets", null, newTweet);
+            long i = db.insertOrThrow("tweets", null, newTweet);
             return true;
         } catch (SQLiteException e) {
             e.printStackTrace();

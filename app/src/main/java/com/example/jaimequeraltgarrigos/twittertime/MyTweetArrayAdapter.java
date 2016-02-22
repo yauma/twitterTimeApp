@@ -68,6 +68,7 @@ public class MyTweetArrayAdapter extends ArrayAdapter {
         holder.imageViewFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myTweetObject = tweetArrayList.get(position);
                 Picasso.with(context)
                         .load(tweetArrayList.get(position).getImageProfileURL())
                         .into(target);
@@ -106,9 +107,9 @@ public class MyTweetArrayAdapter extends ArrayAdapter {
             byte[] byteArrayBitmap = DbBitmapUtility.getBytes(bitmap);
             boolean tweetSavedOnDb = TweetController.getInstance().saveTweetOnDb(context, myTweetObject, byteArrayBitmap);
             if (tweetSavedOnDb == true){
-                Toast.makeText(context,"Tweet Saved",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"Tweet Saved",Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(context,"Tweet Already Saved",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"Tweet Already Saved",Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -134,8 +135,4 @@ class DbBitmapUtility {
         return stream.toByteArray();
     }
 
-    // convert from byte array to bitmap
-    public static Bitmap getImage(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
-    }
 }

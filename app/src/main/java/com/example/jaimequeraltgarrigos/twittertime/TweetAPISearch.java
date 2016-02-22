@@ -82,7 +82,7 @@ public class TweetAPISearch {
     private ArrayList<MyTweetObject> cleanAndOrganizeMyTweetObjectList(ArrayList<Tweet> tweetListFromAPI) {
         ArrayList<MyTweetObject> myTweetObjectList = new ArrayList<MyTweetObject>();
         for (Tweet tweet : tweetArrayList) {
-            MyTweetObject myTweetObject = new MyTweetObject(tweet.idStr,tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrl,
+            MyTweetObject myTweetObject = new MyTweetObject(tweet.id,tweet.user.name, tweet.user.screenName, tweet.user.profileImageUrl,
                     tweet.text, tweet.createdAt, tweet.retweetCount);
             myTweetObjectList.add(myTweetObject);
         }
