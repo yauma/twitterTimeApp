@@ -31,6 +31,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/textViewTweetNoFound"
+            android:text="@string/Sorry"
+            android:visibility="invisible"
             android:layout_gravity="center" />
     </FrameLayout>
 

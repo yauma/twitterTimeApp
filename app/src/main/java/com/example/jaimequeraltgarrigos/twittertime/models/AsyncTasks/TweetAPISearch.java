@@ -66,7 +66,7 @@ public class TweetAPISearch {
 
                     @Override
                     public void failure(TwitterException exception) {
-                        System.out.println(exception);
+                        Toast.makeText(context, "Error in Search Twitter API", Toast.LENGTH_LONG).show();
                     }
                 }));
             }
@@ -79,7 +79,7 @@ public class TweetAPISearch {
 
 
     }
-
+    //method that remove all the dummie data and sort list by most retweets
     private ArrayList<MyTweetObject> cleanAndOrganizeMyTweetObjectList(ArrayList<Tweet> tweetListFromAPI) {
         ArrayList<MyTweetObject> myTweetObjectList = new ArrayList<MyTweetObject>();
         for (Tweet tweet : tweetArrayList) {

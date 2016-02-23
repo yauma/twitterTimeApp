@@ -48,7 +48,7 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
     private String query = "";
     private MyTweetArrayAdapter myTweetArrayAdapter;
     private Handler handler;
-    private String timeRequest;
+    private String timeRequest, timeRequestAMPM;
     private ArrayList<MyTweetObject> tweetArrayList;
 
 
@@ -76,13 +76,13 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
 
         int id = item.getItemId();
 
-        if(id == R.id.myFavoriteTweets){
+        if (id == R.id.myFavoriteTweets) {
             handler.removeCallbacks(runnable);
             getMyFavoriteTweets();
             return true;
         }
 
-        if(id == R.id.twitterTime){
+        if (id == R.id.twitterTime) {
             reloadTweets();
             return true;
         }
@@ -96,7 +96,6 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
         handler = new Handler();
-        textViewTweetNoFound.setText("Sorry, no tweets found for this time. Try later please");
         textViewTweetNoFound.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         TweetController.getInstance().setAsyncResponse(this);
@@ -150,7 +149,11 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
     private void createQuery() {
 
         this.timeRequest = whatTimeIsIt();
-        this.query = "It´s " + timeRequest + " and";
+        this.query = "\"It´s " + timeRequest + " and\"" + " OR " +
+                "\"It´s " + timeRequestAMPM + " and\"" + " OR " +
+                "\"It is " + timeRequest + " and\"" + " OR " +
+                "\"It is " + timeRequestAMPM + " and\"";
+        System.out.println(query);
 
     }
 
@@ -184,6 +187,7 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
         listView.setAdapter(myTweetArrayAdapter);
     }
 
+    //runnable executed every second checking if one minute has spent
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -192,7 +196,6 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
                 timeRequest = exactTime;
                 //Check if fragment is currently added to its activity to avoid errors
                 if (isAdded()) {
-                    System.out.println("reloadTweets");
                     reloadTweets();
                 }
 
@@ -205,14 +208,16 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
     private String whatTimeIsIt() {
         String exactTime;
         Calendar cal = new GregorianCalendar();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm a");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         SimpleDateFormat dateFormatAMPM = new SimpleDateFormat("HH:mm a");
         TimeZone timeZone = TimeZone.getTimeZone(MY_TIMEZONE);
         dateFormat.setTimeZone(timeZone);
+        dateFormatAMPM.setTimeZone(timeZone);
         exactTime = dateFormat.format(cal.getTime());
-
+        timeRequestAMPM = dateFormatAMPM.format(cal.getTime());
         return exactTime;
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

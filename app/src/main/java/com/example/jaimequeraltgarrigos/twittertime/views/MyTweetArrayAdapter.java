@@ -100,7 +100,7 @@ public class MyTweetArrayAdapter extends ArrayAdapter {
         }
 
     }
-
+    //Target is a Picasso interface for image storage
     private Target target = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
