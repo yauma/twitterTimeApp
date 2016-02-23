@@ -1,4 +1,4 @@
-package com.example.jaimequeraltgarrigos.twittertime.dbPackagge;
+package com.example.jaimequeraltgarrigos.twittertime.models.dbPackagge;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -1,4 +1,4 @@
-package com.example.jaimequeraltgarrigos.twittertime;
+package com.example.jaimequeraltgarrigos.twittertime.views;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -7,12 +7,19 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.jaimequeraltgarrigos.twittertime.models.dataClasses.MyTweetObject;
+import com.example.jaimequeraltgarrigos.twittertime.R;
+import com.example.jaimequeraltgarrigos.twittertime.controllers.TweetController;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,9 +35,13 @@ import butterknife.ButterKnife;
  */
 public class MainActivityFragment extends Fragment implements AsyncResponse {
 
-    @Bind(R.id.listViewTweet)ListView listView;
-    @Bind(R.id.textViewTweetNoFound)TextView textViewTweetNoFound;
-    @Bind(R.id.progressBar)ProgressBar progressBar;
+    @Bind(R.id.listViewTweet)
+    ListView listView;
+    @Bind(R.id.textViewTweetNoFound)
+    TextView textViewTweetNoFound;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
+
 
     public static final String MY_TIMEZONE = "America/Montevideo";
     private static boolean INTERNET_CONNECTION = false;
@@ -47,10 +58,36 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null){
+        setHasOptionsMenu(true);
+        if (savedInstanceState != null) {
             tweetArrayList = savedInstanceState.getParcelableArrayList("tweetArrayList");
             timeRequest = savedInstanceState.getString("timeRequest");
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if(id == R.id.myFavoriteTweets){
+            handler.removeCallbacks(runnable);
+            getMyFavoriteTweets();
+            return true;
+        }
+
+        if(id == R.id.twitterTime){
+            reloadTweets();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -64,9 +101,9 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
         progressBar.setVisibility(View.VISIBLE);
         TweetController.getInstance().setAsyncResponse(this);
         //if tweetList ids not null because is load from savedInstance
-        if(tweetArrayList != null){
+        if (tweetArrayList != null) {
             reloadTweetsFromList();
-        }else{
+        } else {
             createQuery();
             getTweets(query);
         }
@@ -84,14 +121,19 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
     private void getTweets(String query) {
         INTERNET_CONNECTION = isNetworkAvailable();
         if (INTERNET_CONNECTION == false) {
-            Toast.makeText(getContext(), "No internet connection avalaible", Toast.LENGTH_LONG).show();
-            tweetArrayList = TweetController.getInstance().getTweetListFromContentProvider(getContext());
+            Toast.makeText(getContext(), "No internet connection avalaible, you can watch your favorite tweets", Toast.LENGTH_LONG).show();
+            getMyFavoriteTweets();
         } else {
             System.out.println("getTweetFromAPI");
             TweetController.getInstance().getTweetListFromAPI(getContext(), query);
         }
     }
 
+    private void getMyFavoriteTweets() {
+        progressBar.setVisibility(View.INVISIBLE);
+        tweetArrayList = TweetController.getInstance().getTweetListFromContentProvider(getContext());
+        loadMyTweeterArrayAdapter();
+    }
 
 
     private void reloadTweets() {
@@ -108,7 +150,7 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
     private void createQuery() {
 
         this.timeRequest = whatTimeIsIt();
-        this.query = "It´s " + timeRequest +" and";
+        this.query = "It´s " + timeRequest + " and";
 
     }
 
@@ -146,16 +188,16 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
         @Override
         public void run() {
             String exactTime = whatTimeIsIt();
-            if(!timeRequest.contains(exactTime)){
+            if (!timeRequest.contains(exactTime)) {
                 timeRequest = exactTime;
                 //Check if fragment is currently added to its activity to avoid errors
-                if(isAdded()){
+                if (isAdded()) {
                     System.out.println("reloadTweets");
                     reloadTweets();
                 }
 
             }
-            System.out.println(exactTime + " " +timeRequest);
+            System.out.println(exactTime + " " + timeRequest);
             handler.postDelayed(runnable, 1000);
         }
     };
@@ -163,10 +205,12 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
     private String whatTimeIsIt() {
         String exactTime;
         Calendar cal = new GregorianCalendar();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm ");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm a");
+        SimpleDateFormat dateFormatAMPM = new SimpleDateFormat("HH:mm a");
         TimeZone timeZone = TimeZone.getTimeZone(MY_TIMEZONE);
         dateFormat.setTimeZone(timeZone);
         exactTime = dateFormat.format(cal.getTime());
+
         return exactTime;
     }
 
@@ -174,6 +218,6 @@ public class MainActivityFragment extends Fragment implements AsyncResponse {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("tweetArrayList", tweetArrayList);
-        outState.putString("timeRequest",timeRequest);
+        outState.putString("timeRequest", timeRequest);
     }
 }

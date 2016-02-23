@@ -1,6 +1,6 @@
-package com.example.jaimequeraltgarrigos.twittertime;
+package com.example.jaimequeraltgarrigos.twittertime.views;
 
-import com.twitter.sdk.android.core.models.Tweet;
+import com.example.jaimequeraltgarrigos.twittertime.models.dataClasses.MyTweetObject;
 
 import java.util.ArrayList;
 

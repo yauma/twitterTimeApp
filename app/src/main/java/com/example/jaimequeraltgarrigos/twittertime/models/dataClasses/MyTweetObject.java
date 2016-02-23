@@ -1,4 +1,4 @@
-package com.example.jaimequeraltgarrigos.twittertime;
+package com.example.jaimequeraltgarrigos.twittertime.models.dataClasses;
 
 import android.os.Parcel;
 import android.os.Parcelable;

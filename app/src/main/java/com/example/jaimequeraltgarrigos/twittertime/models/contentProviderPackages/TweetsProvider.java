@@ -1,4 +1,4 @@
-package com.example.jaimequeraltgarrigos.twittertime.contentProviderPackages;
+package com.example.jaimequeraltgarrigos.twittertime.models.contentProviderPackages;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -12,8 +12,8 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
 
-import com.example.jaimequeraltgarrigos.twittertime.MyTweetObject;
-import com.example.jaimequeraltgarrigos.twittertime.dbPackagge.DbHelper;
+import com.example.jaimequeraltgarrigos.twittertime.models.dataClasses.MyTweetObject;
+import com.example.jaimequeraltgarrigos.twittertime.models.dbPackagge.DbHelper;
 
 import java.util.ArrayList;
 

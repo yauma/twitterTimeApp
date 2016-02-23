@@ -1,8 +1,10 @@
-package com.example.jaimequeraltgarrigos.twittertime;
+package com.example.jaimequeraltgarrigos.twittertime.models.AsyncTasks;
 
 import android.content.Context;
 import android.widget.Toast;
 
+import com.example.jaimequeraltgarrigos.twittertime.controllers.TweetController;
+import com.example.jaimequeraltgarrigos.twittertime.models.dataClasses.MyTweetObject;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.AppSession;
 import com.twitter.sdk.android.core.Callback;
@@ -18,7 +20,6 @@ import com.twitter.sdk.android.core.models.Tweet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 

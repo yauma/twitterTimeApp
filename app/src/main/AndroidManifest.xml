@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".views.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -25,7 +25,7 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fa3cf94853f137172a9270da92660cba81996a56" />
-        <provider android:name=".contentProviderPackages.TweetsProvider"
+        <provider android:name=".models.contentProviderPackages.TweetsProvider"
             android:authorities="com.example.jaimequeraltgarrigos.twittertime.contentproviders"/>
     </application>
 

@@ -1,9 +1,12 @@
-package com.example.jaimequeraltgarrigos.twittertime;
+package com.example.jaimequeraltgarrigos.twittertime.controllers;
 
 import android.content.Context;
 
-import com.example.jaimequeraltgarrigos.twittertime.contentProviderPackages.TweetsProvider;
-import com.example.jaimequeraltgarrigos.twittertime.dbPackagge.DbTweets;
+import com.example.jaimequeraltgarrigos.twittertime.models.AsyncTasks.TweetAPISearch;
+import com.example.jaimequeraltgarrigos.twittertime.models.contentProviderPackages.TweetsProvider;
+import com.example.jaimequeraltgarrigos.twittertime.models.dbPackagge.DbTweets;
+import com.example.jaimequeraltgarrigos.twittertime.models.dataClasses.MyTweetObject;
+import com.example.jaimequeraltgarrigos.twittertime.views.AsyncResponse;
 
 import java.util.ArrayList;
 

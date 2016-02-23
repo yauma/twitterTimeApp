@@ -1,12 +1,11 @@
-package com.example.jaimequeraltgarrigos.twittertime.dbPackagge;
+package com.example.jaimequeraltgarrigos.twittertime.models.dbPackagge;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.widget.Toast;
 
-import com.example.jaimequeraltgarrigos.twittertime.MyTweetObject;
+import com.example.jaimequeraltgarrigos.twittertime.models.dataClasses.MyTweetObject;
 
 /**
  * Created by jaimequeraltgarrigos on 21/2/16.
